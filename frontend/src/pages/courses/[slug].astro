@@ -280,45 +280,10 @@ const courseTitle = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice
 
 <script>
   const enrollBtn = document.querySelector('.enroll-btn');
-  const apiUrl = import.meta.env.PUBLIC_BACKEND_API_URL || 'http://localhost:4000/api';
   
   if (enrollBtn) {
-    enrollBtn.addEventListener('click', async () => {
-      enrollBtn.textContent = 'Processing...';
-      
-      try {
-        const response = await fetch(`${apiUrl}/checkout/stripe`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            items: [
-              {
-                price_data: {
-                  currency: 'usd',
-                  product_data: {
-                    name: document.querySelector('h1')?.textContent || 'Course Enrollment',
-                  },
-                  unit_amount: 14999, // Static for now
-                },
-                quantity: 1,
-              }
-            ],
-            successUrl: `${window.location.origin}/courses?success=true`,
-            cancelUrl: window.location.href,
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          throw new Error('Checkout URL not returned');
-        }
-      } catch (error) {
-        alert("Failed to initialize checkout.");
-        enrollBtn.textContent = 'Enroll Now';
-      }
+    enrollBtn.addEventListener('click', () => {
+      alert("Payment integration is coming soon!");
     });
   }
 </script>

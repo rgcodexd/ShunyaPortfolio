@@ -1,0 +1,91 @@
+---
+---
+
+<footer class="footer">
+  <div class="container footer-container">
+    <div class="footer-brand">
+      <h2 class="text-display">SHUNYA</h2>
+      <p class="text-secondary">Studio: Start from the Zero.<br/>The portfolio and studio of Rakuma, elite 3D artist.</p>
+    </div>
+    
+    <div class="footer-links">
+      <div class="link-group">
+        <h4>Explore</h4>
+        <a href="/portfolio">Portfolio</a>
+        <a href="/services">Services</a>
+        <a href="/courses">Courses</a>
+      </div>
+      <div class="link-group">
+        <h4>Connect</h4>
+        <a href="/booking">Book a Call</a>
+        <a href="/contact">Contact</a>
+        <a href="https://twitter.com">Twitter</a>
+        <a href="https://instagram.com">Instagram</a>
+      </div>
+      <div class="link-group">
+        <h4>Legal</h4>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <p class="text-secondary">&copy; {new Date().getFullYear()} Shunya Studio. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--surface-color);
+    padding: var(--spacing-8) 0 var(--spacing-4) 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: var(--spacing-12);
+  }
+  
+  .footer-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-8);
+    margin-bottom: var(--spacing-6);
+  }
+  
+  .footer-brand h2 {
+    margin-bottom: var(--spacing-2);
+  }
+  
+  .footer-links {
+    display: flex;
+    justify-content: space-around;
+    gap: var(--spacing-4);
+  }
+  
+  .link-group h4 {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-3);
+  }
+  
+  .link-group a {
+    display: block;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-2);
+    font-size: 0.9rem;
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-4);
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-container {
+      grid-template-columns: 1fr;
+    }
+    .footer-links {
+      flex-direction: column;
+      gap: var(--spacing-6);
+    }
+  }
+</style>

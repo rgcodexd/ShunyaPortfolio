@@ -1,0 +1,233 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const courses = [
+  {
+    title: 'Mastering Unreal Engine 5 Environments',
+    level: 'Intermediate to Advanced',
+    duration: '12 Hours',
+    modules: 8,
+    price: '$149.99',
+    slug: 'ue5-environments-masterclass'
+  },
+  {
+    title: 'Hard Surface Concepting in 3D',
+    level: 'Beginner to Intermediate',
+    duration: '8 Hours',
+    modules: 5,
+    price: '$99.99',
+    slug: 'hardsurface-concepting'
+  }
+];
+---
+
+<Layout title="Courses & Masterclasses | Shunya Studio" description="Learn premium 3D art workflows from Rakuma.">
+  <div class="courses-page">
+    <div class="container">
+      <header class="page-header">
+        <h1 class="text-display">Masterclasses</h1>
+        <p class="text-secondary text-body">Comprehensive, step-by-step training for ambitious 3D artists.</p>
+      </header>
+
+      <div class="courses-grid">
+        {courses.map(course => (
+          <a href={`/courses/${course.slug}`} class="course-card">
+            <div class="course-image">
+              <div class="image-placeholder"></div>
+            </div>
+            <div class="course-content">
+              <div class="meta-row">
+                <span class="level">{course.level}</span>
+              </div>
+              <h2 class="text-display">{course.title}</h2>
+              <div class="stats-row">
+                <span>{course.duration}</span>
+                <span>&bull;</span>
+                <span>{course.modules} Modules</span>
+              </div>
+              <div class="price-row">
+                <span class="price">{course.price}</span>
+                <span class="enroll-text">View Curriculum &rarr;</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      <section class="mentorship-section">
+        <div class="mentorship-content">
+          <h2 class="text-display">1-on-1 Mentorship</h2>
+          <p class="text-secondary">Looking for personalized feedback on your portfolio? I offer limited slots for direct mentorship and portfolio reviews.</p>
+          <a href="/booking?service=mentorship" class="btn btn-outline mt-4">Apply for Mentorship</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .courses-page {
+    padding-top: calc(var(--spacing-12) + var(--spacing-6));
+    padding-bottom: var(--spacing-12);
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-12);
+  }
+  
+  .page-header h1 {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-2);
+  }
+
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--spacing-8);
+    margin-bottom: var(--spacing-12);
+  }
+
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .course-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+  }
+
+  .course-image {
+    height: 250px;
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--surface-elevated), var(--surface-color));
+  }
+
+  .course-content {
+    padding: var(--spacing-6);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .meta-row {
+    margin-bottom: var(--spacing-2);
+  }
+
+  .level {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--bg-color);
+    background: var(--accent-color);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .course-content h2 {
+    font-size: 1.75rem;
+    margin-bottom: var(--spacing-3);
+  }
+
+  .stats-row {
+    display: flex;
+    gap: var(--spacing-2);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-6);
+  }
+
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-4);
+  }
+
+  .price {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+
+  .enroll-text {
+    color: var(--accent-color);
+    font-weight: 600;
+  }
+
+  .mentorship-section {
+    background: linear-gradient(to right, var(--surface-color), var(--bg-color));
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--accent-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-8);
+  }
+
+  .mentorship-content h2 {
+    margin-bottom: var(--spacing-2);
+  }
+  
+  .mentorship-content p {
+    max-width: 600px;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .mt-4 {
+    margin-top: var(--spacing-4);
+    display: inline-block;
+  }
+
+  .btn {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: 1rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+  
+  .btn-outline:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  @media (max-width: 768px) {
+    .courses-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  
+  gsap.from('.course-card', {
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: 'power3.out'
+  });
+</script>

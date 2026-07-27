@@ -1,0 +1,180 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const products = [
+  {
+    title: 'Cyberpunk Asset Pack Vol. 1',
+    price: '$24.99',
+    type: '3D Assets',
+    slug: 'cyberpunk-asset-pack-1'
+  },
+  {
+    title: 'Sci-Fi Decal Pack',
+    price: '$14.99',
+    type: 'Textures',
+    slug: 'scifi-decal-pack'
+  },
+  {
+    title: 'Post-Apoc Material Setup',
+    price: '$19.99',
+    type: 'Smart Materials',
+    slug: 'post-apoc-materials'
+  },
+  {
+    title: 'Studio Lighting HDRI Pack',
+    price: '$9.99',
+    type: 'Lighting',
+    slug: 'studio-lighting-hdri'
+  }
+];
+---
+
+<Layout title="Shop | Shunya Studio" description="Premium 3D assets, textures, and materials.">
+  <div class="shop-page">
+    <div class="container">
+      <header class="page-header">
+        <h1 class="text-display">Merchandise & Assets</h1>
+        <p class="text-secondary text-body">High-quality resources to speed up your production pipeline.</p>
+      </header>
+
+      <div class="filters">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">3D Assets</button>
+        <button class="filter-btn">Textures</button>
+        <button class="filter-btn">Smart Materials</button>
+      </div>
+
+      <div class="shop-grid">
+        {products.map(product => (
+          <a href={`/shop/${product.slug}`} class="product-card">
+            <div class="product-image">
+              <div class="image-placeholder"></div>
+            </div>
+            <div class="product-info">
+              <div class="header-row">
+                <h2 class="text-display">{product.title}</h2>
+                <span class="price">{product.price}</span>
+              </div>
+              <span class="type">{product.type}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .shop-page {
+    padding-top: calc(var(--spacing-12) + var(--spacing-6));
+    padding-bottom: var(--spacing-12);
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+  }
+  
+  .page-header h1 {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-2);
+  }
+
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-8);
+  }
+  
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-6);
+  }
+
+  .product-card {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: block;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+  }
+
+  .product-image {
+    height: 250px;
+    background: var(--surface-elevated);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--surface-color), var(--surface-elevated));
+  }
+
+  .product-info {
+    padding: var(--spacing-4);
+  }
+
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-1);
+  }
+
+  .product-info h2 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  .price {
+    font-family: var(--font-display);
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+
+  .type {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  
+  gsap.from('.product-card', {
+    y: 40,
+    opacity: 0,
+    duration: 0.6,
+    stagger: 0.1,
+    ease: 'power2.out'
+  });
+</script>

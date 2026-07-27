@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About Rakuma | Shunya Studio" description="The story and tools behind Rakuma's elite 3D art studio.">
+  <div class="about-page">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <h1 class="text-display">Start from the Zero.</h1>
+          <p class="lead-text">
+            I am Rakuma, a Senior 3D Environment & Hard Surface Artist with over a decade of experience crafting immersive digital worlds for AAA games, films, and high-end commercial projects.
+          </p>
+          <p class="text-secondary text-body">
+            My journey began in traditional painting, which deeply informed my approach to lighting, composition, and color theory in the 3D space. I specialize in building highly optimized, game-ready environments that do not compromise on cinematic quality. At Shunya Studio, the philosophy is simple: we start from nothing (Zero) and build entire realities.
+          </p>
+
+          <h2 class="text-display mt-8">Selected Clients</h2>
+          <div class="client-list">
+            <span class="client">Sony Interactive</span>
+            <span class="client">Square Enix</span>
+            <span class="client">Riot Games</span>
+            <span class="client">Netflix</span>
+            <span class="client">Bungie</span>
+          </div>
+
+          <h2 class="text-display mt-8">Toolkit</h2>
+          <div class="tools-grid">
+            <div class="tool-badge">Unreal Engine 5</div>
+            <div class="tool-badge">Blender</div>
+            <div class="tool-badge">ZBrush</div>
+            <div class="tool-badge">Substance Painter</div>
+            <div class="tool-badge">Substance Designer</div>
+            <div class="tool-badge">Marvelous Designer</div>
+            <div class="tool-badge">Houdini</div>
+          </div>
+        </div>
+        
+        <div class="about-image-wrapper">
+          <div class="profile-placeholder">
+            <span class="placeholder-text">Artist Photo<br/>(Rakuma)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .about-page {
+    padding-top: calc(var(--spacing-12) + var(--spacing-6));
+    padding-bottom: var(--spacing-12);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-12);
+    align-items: center;
+  }
+
+  .about-content h1 {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .lead-text {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: var(--spacing-4);
+    color: var(--text-primary);
+  }
+
+  .mt-8 {
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+    font-size: 2rem;
+  }
+
+  .client-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+  }
+
+  .client {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+  }
+
+  .client:hover {
+    color: var(--accent-color);
+  }
+
+  .tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+  }
+
+  .tool-badge {
+    background: var(--surface-elevated);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+
+  .about-image-wrapper {
+    position: relative;
+    height: 700px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .profile-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--surface-elevated), var(--surface-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 992px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-8);
+    }
+    
+    .about-image-wrapper {
+      height: 500px;
+      order: -1;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  
+  gsap.from('.about-content > *', {
+    y: 30,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: 'power3.out'
+  });
+  
+  gsap.from('.about-image-wrapper', {
+    scale: 0.95,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out',
+    delay: 0.3
+  });
+</script>

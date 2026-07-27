@@ -1,0 +1,207 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Comments from '../../components/Comments.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'optimizing-nanite-foliage' } },
+    { params: { slug: 'psychology-lighting-horror' } },
+    { params: { slug: 'hardsurface-workflow-2024' } },
+  ];
+}
+
+const { slug } = Astro.params;
+const postTitle = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+---
+
+<Layout title={`${postTitle} | Shunya Insights`} description={`Read about ${postTitle}.`}>
+  <article class="blog-detail">
+    <div class="blog-hero">
+      <div class="container hero-container">
+        <div class="blog-meta">
+          <span class="category">Technical Art</span>
+          <span class="dot">&bull;</span>
+          <span class="time">8 min read</span>
+          <span class="dot">&bull;</span>
+          <span class="date">Oct 10, 2024</span>
+        </div>
+        <h1 class="text-display">{postTitle}</h1>
+      </div>
+      <div class="hero-image-placeholder"></div>
+    </div>
+    
+    <div class="container">
+      <div class="blog-body">
+        <p class="lead">Foliage in Unreal Engine 5 has always been a challenge, especially when migrating from traditional LOD systems to Nanite. In this breakdown, we'll look at the most common pitfalls and how to bypass them for stable 60fps performance on current-gen hardware.</p>
+        
+        <h2>The Overdraw Problem</h2>
+        <p>When you have thousands of overlapping alpha cards, the GPU struggles to calculate transparency sorting. Nanite handles opaque geometry beautifully, but masked materials (like leaves) still incur massive overdraw costs.</p>
+        
+        <blockquote>
+          "The trick isn't rendering fewer polygons; it's rendering fewer pixels that fail the depth test."
+        </blockquote>
+        
+        <h2>Modeling for Nanite Foliage</h2>
+        <p>Instead of using flat planes with alpha masks, we actually want to model the geometric shape of the leaf clusters. Yes, this increases the polycount significantly (often 10x to 50x higher than a traditional tree), but Nanite's cluster culling handles this effortlessly, and we completely eliminate the masked overdraw.</p>
+        
+        <div class="embedded-media">
+           <!-- Placeholder for video/image embed -->
+           <span>Video Embed: Nanite Cluster Visualization</span>
+        </div>
+        
+        <h2>Shadow Maps vs Virtual Shadow Maps</h2>
+        <p>When using Virtual Shadow Maps (VSMs), dense geometric foliage can cause invalidation issues if the leaves are swaying in the wind via World Position Offset (WPO). The solution is to distance-cull the WPO so shadows cache correctly in the distance.</p>
+        
+        <hr/>
+        
+        <div class="author-bio">
+          <div class="author-avatar"></div>
+          <div class="author-info">
+            <h4 class="text-display">Written by Rakuma</h4>
+            <p class="text-secondary">Senior 3D Artist specializing in environments and technical optimization for UE5.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Comment System -->
+      <Comments resourceId={slug} />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .blog-detail {
+    padding-top: var(--spacing-12);
+    padding-bottom: var(--spacing-12);
+  }
+  
+  .hero-container {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-8) auto;
+    text-align: center;
+  }
+  
+  .blog-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+  
+  .category {
+    color: var(--accent-color);
+  }
+  
+  .time, .date, .dot {
+    color: var(--text-secondary);
+  }
+  
+  .hero-container h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+  }
+  
+  .hero-image-placeholder {
+    max-width: 1000px;
+    margin: 0 auto var(--spacing-8) auto;
+    height: 500px;
+    background: linear-gradient(135deg, var(--surface-elevated), var(--surface-color));
+    border-radius: var(--radius-lg);
+  }
+  
+  .blog-body {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.15rem;
+    line-height: 1.8;
+  }
+  
+  .lead {
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-8);
+  }
+  
+  .blog-body h2 {
+    font-size: 2rem;
+    margin: var(--spacing-8) 0 var(--spacing-4) 0;
+    color: var(--text-primary);
+  }
+  
+  .blog-body p {
+    margin-bottom: var(--spacing-4);
+    color: #cccccc;
+  }
+  
+  blockquote {
+    border-left: 4px solid var(--accent-color);
+    padding-left: var(--spacing-4);
+    margin: var(--spacing-6) 0;
+    font-size: 1.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--text-primary);
+  }
+  
+  .embedded-media {
+    width: 100%;
+    height: 350px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    margin: var(--spacing-6) 0;
+  }
+  
+  hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: var(--spacing-8) 0;
+  }
+  
+  .author-bio {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    background: var(--surface-color);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-12);
+  }
+  
+  .author-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--surface-elevated);
+    flex-shrink: 0;
+  }
+  
+  .author-info h4 {
+    margin-bottom: var(--spacing-1);
+  }
+  
+  .author-info p {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero-container h1 {
+      font-size: 2.5rem;
+    }
+    
+    .hero-image-placeholder {
+      height: 300px;
+      border-radius: 0;
+    }
+  }
+</style>

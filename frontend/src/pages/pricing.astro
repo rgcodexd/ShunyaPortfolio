@@ -1,0 +1,224 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pricingPlans = [
+  {
+    title: 'Hero Prop',
+    price: '$800+',
+    timeline: '1-2 Weeks',
+    features: ['High Poly / Low Poly', '4K Textures', 'LODs & Collision', 'Engine Integration']
+  },
+  {
+    title: 'Modular Environment Kit',
+    price: '$3,500+',
+    timeline: '4-6 Weeks',
+    features: ['Up to 50 Modular Pieces', 'Trim Sheets & Tileables', 'Master Material Setup', 'Demo Scene']
+  },
+  {
+    title: 'Full Cinematic Level',
+    price: 'Custom Quote',
+    timeline: '8+ Weeks',
+    features: ['Art Direction & Concept', 'Custom Hero Assets', 'Lighting & Post-Processing', 'Performance Profiling']
+  }
+];
+---
+
+<Layout title="Pricing | Shunya Studio" description="Transparent pricing for premium 3D art services.">
+  <div class="pricing-page">
+    <div class="container">
+      <header class="page-header">
+        <h1 class="text-display">Pricing & Packages</h1>
+        <p class="text-secondary text-body">Transparent commercial ranges to help you scope your next project.</p>
+      </header>
+
+      <div class="pricing-grid">
+        {pricingPlans.map((plan, i) => (
+          <div class={`pricing-card ${i === 1 ? 'featured' : ''}`}>
+            {i === 1 && <div class="featured-badge">Most Popular</div>}
+            <h2 class="text-display">{plan.title}</h2>
+            <div class="price-block">
+              <span class="price text-display">{plan.price}</span>
+              <span class="timeline">Est. {plan.timeline}</span>
+            </div>
+            <ul class="feature-list">
+              {plan.features.map(feature => (
+                <li>{feature}</li>
+              ))}
+            </ul>
+            <a href={`/booking?plan=${encodeURIComponent(plan.title)}`} class={`btn ${i === 1 ? 'btn-primary' : 'btn-outline'} w-full`}>Book this package</a>
+          </div>
+        ))}
+      </div>
+
+      <section class="add-on-section">
+        <div class="add-on-box">
+          <h3>Need something faster?</h3>
+          <p class="text-secondary">We offer a rush fee (+50% premium) for accelerated timelines depending on current availability.</p>
+        </div>
+        <div class="add-on-box">
+          <h3>Retainer Agreements</h3>
+          <p class="text-secondary">For ongoing development, we offer monthly retainer structures starting at $5,000/mo ensuring dedicated capacity.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .pricing-page {
+    padding-top: calc(var(--spacing-12) + var(--spacing-6));
+    padding-bottom: var(--spacing-12);
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-12);
+  }
+  
+  .page-header h1 {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-2);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-12);
+  }
+
+  .pricing-card {
+    background: var(--surface-color);
+    padding: var(--spacing-8) var(--spacing-6);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pricing-card.featured {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--accent-color);
+    color: var(--bg-color);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .price-block {
+    margin: var(--spacing-4) 0;
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .price {
+    display: block;
+    font-size: 3rem;
+    color: var(--accent-color);
+  }
+
+  .timeline {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-8);
+    flex-grow: 1;
+  }
+
+  .feature-list li {
+    margin-bottom: var(--spacing-3);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+  }
+
+  .feature-list li::before {
+    content: "✓";
+    color: var(--success);
+    margin-right: var(--spacing-2);
+    font-weight: bold;
+  }
+
+  .w-full {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: 1.1rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .btn-primary {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: 1px solid var(--accent-color);
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+
+  .add-on-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-6);
+  }
+
+  .add-on-box {
+    background: var(--surface-elevated);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-md);
+  }
+
+  @media (max-width: 768px) {
+    .pricing-card.featured {
+      transform: scale(1);
+    }
+    .add-on-section {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  
+  gsap.from('.pricing-card', {
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: 'power3.out'
+  });
+</script>

@@ -1,0 +1,169 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  // Mock routes based on the mock data. Will use Supabase later.
+  return [
+    { params: { slug: 'cyberpunk-alley' } },
+    { params: { slug: 'mecha-concept' } },
+    { params: { slug: 'fantasy-tavern' } },
+    { params: { slug: 'scifi-corridor' } },
+    { params: { slug: 'alien-flora' } },
+    { params: { slug: 'vintage-car' } },
+  ];
+}
+
+const { slug } = Astro.params;
+// Mock lookup
+const projectTitle = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+---
+
+<Layout title={`${projectTitle} | Shunya Portfolio`} description={`Detailed case study of the ${projectTitle} 3D project.`}>
+  <article class="project-detail">
+    <div class="hero-cover">
+      <!-- Fallback color block -->
+    </div>
+    
+    <div class="container project-content">
+      <header class="project-header">
+        <div class="metadata">
+          <span class="tag">Environment Design</span>
+          <span class="tag">2023</span>
+          <span class="tag">Unreal Engine 5</span>
+        </div>
+        <h1 class="text-display">{projectTitle}</h1>
+        <p class="summary text-secondary">
+          A deep dive into the creation of a neon-lit, atmospheric environment optimized for real-time rendering. This case study covers blocking, lighting, and material creation.
+        </p>
+      </header>
+      
+      <div class="breakdown-section">
+        <h2 class="text-display">The Brief</h2>
+        <p>The client required a highly modular, performant environment capable of running at 60fps on modern consoles. We approached this by building a comprehensive trim sheet pipeline.</p>
+        
+        <div class="media-gallery">
+          <div class="media-item media-large"></div>
+          <div class="media-item"></div>
+          <div class="media-item"></div>
+        </div>
+      </div>
+      
+      <div class="breakdown-section">
+        <h2 class="text-display">Process & Outcome</h2>
+        <p>By leveraging Nanite for dense meshes and Lumen for dynamic bounce lighting, we achieved a cinematic look without baking shadows. The final asset pack included over 200 modular pieces.</p>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .hero-cover {
+    width: 100%;
+    height: 70vh;
+    background: linear-gradient(45deg, var(--bg-color), var(--surface-color));
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .project-content {
+    max-width: 900px;
+    margin: -100px auto 0 auto;
+    position: relative;
+    background: var(--bg-color);
+    padding: var(--spacing-6) var(--spacing-6) var(--spacing-12) var(--spacing-6);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+  }
+  
+  .metadata {
+    display: flex;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
+  }
+  
+  .tag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--spacing-1) var(--spacing-2);
+    background: var(--surface-color);
+    border-radius: 4px;
+    color: var(--accent-color);
+    font-weight: 600;
+  }
+  
+  .project-header h1 {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-4);
+  }
+  
+  .summary {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-8);
+  }
+  
+  .breakdown-section {
+    margin-bottom: var(--spacing-8);
+  }
+  
+  .breakdown-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-4);
+  }
+  
+  .breakdown-section p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-6);
+  }
+  
+  .media-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+    margin: var(--spacing-6) 0;
+  }
+  
+  .media-item {
+    background: var(--surface-elevated);
+    height: 300px;
+    border-radius: var(--radius-md);
+  }
+  
+  .media-large {
+    grid-column: span 2;
+    height: 500px;
+  }
+  
+  @media (max-width: 768px) {
+    .project-content {
+      padding: var(--spacing-4);
+      margin-top: -50px;
+    }
+    
+    .project-header h1 {
+      font-size: 2.5rem;
+    }
+    
+    .media-gallery {
+      grid-template-columns: 1fr;
+    }
+    
+    .media-large {
+      grid-column: span 1;
+      height: 300px;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  
+  gsap.from('.project-content', {
+    y: 100,
+    opacity: 0,
+    duration: 1,
+    ease: 'power3.out',
+    delay: 0.2
+  });
+</script>

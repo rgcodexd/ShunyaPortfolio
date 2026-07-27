@@ -1,0 +1,161 @@
+---
+---
+
+<section class="hero-section">
+  <div class="hero-bg">
+    <!-- Optional: Add a subtle animated grid or particle effect here -->
+    <div class="gradient-overlay"></div>
+  </div>
+  
+  <div class="container hero-content">
+    <h1 class="hero-title text-display">
+      <span class="line-1">Crafting</span>
+      <span class="line-2">Digital</span>
+      <span class="line-3">Realities.</span>
+    </h1>
+    
+    <p class="hero-subtitle text-body">
+      Premium 3D art, environments, and cinematic experiences designed for the world's most ambitious studios.
+    </p>
+    
+    <div class="hero-ctas">
+      <a href="/portfolio" class="btn btn-primary btn-lg">Explore Work</a>
+      <a href="/booking" class="btn btn-outline btn-lg">Book a Consultation</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: var(--spacing-12);
+    overflow: hidden;
+  }
+  
+  .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #1e1e1e 0%, #121212 100%);
+    z-index: -1;
+  }
+  
+  .gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, var(--bg-color), transparent);
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    z-index: 1;
+  }
+  
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.1;
+    margin-bottom: var(--spacing-4);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .hero-title span {
+    display: block;
+    opacity: 0; /* for GSAP */
+    transform: translateY(30px); /* for GSAP */
+  }
+  
+  .line-2 {
+    color: var(--accent-color);
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-6);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0; /* for GSAP */
+  }
+  
+  .hero-ctas {
+    display: flex;
+    gap: var(--spacing-3);
+    justify-content: center;
+    opacity: 0; /* for GSAP */
+  }
+  
+  .btn-lg {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: 1.1rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: 1px solid var(--accent-color);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--text-primary);
+    border-color: var(--text-primary);
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+  
+  .btn-outline:hover {
+    border-color: var(--text-primary);
+  }
+  
+  @media (max-width: 768px) {
+    .hero-ctas {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  
+  // Hero Animation Timeline
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  
+  tl.to('.hero-title span', {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    stagger: 0.2,
+    delay: 0.2
+  })
+  .to('.hero-subtitle', {
+    opacity: 1,
+    y: 0,
+    duration: 1
+  }, "-=0.5")
+  .to('.hero-ctas', {
+    opacity: 1,
+    y: 0,
+    duration: 1
+  }, "-=0.7");
+</script>

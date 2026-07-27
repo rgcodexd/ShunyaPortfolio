@@ -1,0 +1,81 @@
+---
+---
+
+<section class="about-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3 class="text-display">10+</h3>
+        <p>Years Experience</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="text-display">AAA</h3>
+        <p>Game Studio Clients</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="text-display">50+</h3>
+        <p>Projects Delivered</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="text-display">100%</h3>
+        <p>Client Satisfaction</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-strip {
+    background-color: var(--surface-color);
+    padding: var(--spacing-6) 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+    text-align: center;
+  }
+  
+  .stat-item h3 {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-1);
+  }
+  
+  .stat-item p {
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+  }
+  
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-6);
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  gsap.registerPlugin(ScrollTrigger);
+  
+  gsap.from('.stat-item', {
+    scrollTrigger: {
+      trigger: '.about-strip',
+      start: 'top 90%',
+    },
+    y: 30,
+    opacity: 0,
+    duration: 0.6,
+    stagger: 0.1,
+    ease: 'power2.out'
+  });
+</script>

@@ -1,0 +1,194 @@
+---
+interface Props {
+  resourceId: string;
+}
+
+const { resourceId } = Astro.props;
+
+// Mock comments
+const mockComments = [
+  { id: 1, author: 'AlexD', text: 'Great breakdown! How did you handle the LOD transitions?', time: '2 hours ago', likes: 4 },
+  { id: 2, author: 'Rakuma', text: 'Thanks! The LOD transitions were handled automatically by Nanite, which is the beauty of it. No popping!', time: '1 hour ago', likes: 12, isOwner: true },
+];
+---
+
+<div class="comments-section" id={`comments-${resourceId}`}>
+  <h3 class="text-display">Discussion ({mockComments.length})</h3>
+  
+  <form class="comment-form" id="commentForm">
+    <textarea name="text" placeholder="Join the discussion..." rows="3" required></textarea>
+    <input type="hidden" name="resourceId" value={resourceId} />
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" id="commentBtn">Post Comment</button>
+    </div>
+  </form>
+  
+  <div class="comments-list">
+    {mockComments.map(comment => (
+      <div class={`comment-node ${comment.isOwner ? 'is-owner' : ''}`}>
+        <div class="comment-header">
+          <span class="author">{comment.author} {comment.isOwner && <span class="badge">Author</span>}</span>
+          <span class="time">{comment.time}</span>
+        </div>
+        <div class="comment-body">
+          <p>{comment.text}</p>
+        </div>
+        <div class="comment-actions">
+          <button class="action-btn">👍 {comment.likes}</button>
+          <button class="action-btn">Reply</button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .comments-section {
+    margin-top: var(--spacing-8);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-8);
+  }
+  
+  .comments-section h3 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-6);
+  }
+  
+  .comment-form {
+    margin-bottom: var(--spacing-8);
+  }
+  
+  textarea {
+    width: 100%;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-3);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: var(--spacing-2);
+  }
+  
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .btn {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+  
+  .comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+  
+  .comment-node {
+    background: var(--surface-color);
+    padding: var(--spacing-4);
+    border-radius: var(--radius-md);
+  }
+  
+  .comment-node.is-owner {
+    border-left: 3px solid var(--accent-color);
+  }
+  
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-2);
+    font-size: 0.9rem;
+  }
+  
+  .author {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  
+  .badge {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    margin-left: 8px;
+  }
+  
+  .time {
+    color: var(--text-secondary);
+  }
+  
+  .comment-body p {
+    margin: 0 0 var(--spacing-3) 0;
+    color: #e0e0e0;
+  }
+  
+  .comment-actions {
+    display: flex;
+    gap: var(--spacing-3);
+  }
+  
+  .action-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .action-btn:hover {
+    color: var(--text-primary);
+  }
+</style>
+
+<script>
+  const commentForm = document.getElementById('commentForm');
+  const commentBtn = document.getElementById('commentBtn');
+  const apiUrl = import.meta.env.PUBLIC_BACKEND_API_URL || 'http://localhost:4000/api';
+
+  if (commentForm) {
+    commentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(commentForm as HTMLFormElement);
+      const data = Object.fromEntries(formData);
+      
+      if (commentBtn) commentBtn.textContent = 'Posting...';
+      
+      try {
+        const response = await fetch(`${apiUrl}/comments`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) throw new Error('Submission failed');
+        
+        // In a real app, append the comment to the DOM or refetch
+        alert('Comment posted!');
+        (commentForm as HTMLFormElement).reset();
+      } catch (error) {
+        alert("Failed to post comment.");
+      } finally {
+        if (commentBtn) commentBtn.textContent = 'Post Comment';
+      }
+    });
+  }
+</script>

@@ -1,0 +1,233 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'cyberpunk-asset-pack-1' } },
+    { params: { slug: 'scifi-decal-pack' } },
+    { params: { slug: 'post-apoc-materials' } },
+    { params: { slug: 'studio-lighting-hdri' } }
+  ];
+}
+
+const { slug } = Astro.params;
+const productTitle = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+---
+
+<Layout title={`${productTitle} | Shunya Shop`} description={`Buy the ${productTitle} asset pack.`}>
+  <div class="product-page">
+    <div class="container">
+      <a href="/shop" class="back-link">&larr; Back to Shop</a>
+      
+      <div class="product-grid">
+        <div class="product-gallery">
+          <div class="main-image"></div>
+          <div class="thumbnail-list">
+            <div class="thumb active"></div>
+            <div class="thumb"></div>
+            <div class="thumb"></div>
+          </div>
+        </div>
+        
+        <div class="product-details">
+          <span class="category">3D Assets</span>
+          <h1 class="text-display">{productTitle}</h1>
+          <div class="price text-display">$24.99</div>
+          
+          <p class="description">
+            A comprehensive collection of 50 highly detailed, optimized models ready to drop into your Unreal Engine 5 projects. Includes master materials, trim sheets, and custom colliders.
+          </p>
+          
+          <div class="specs">
+            <div class="spec-item">
+              <span class="label">Format</span>
+              <span class="value">.uasset, .fbx, .obj</span>
+            </div>
+            <div class="spec-item">
+              <span class="label">Textures</span>
+              <span class="value">4K PBR (Base Color, Normal, ORM)</span>
+            </div>
+            <div class="spec-item">
+              <span class="label">License</span>
+              <span class="value">Commercial Use</span>
+            </div>
+          </div>
+          
+          <button class="btn btn-primary add-to-cart">Add to Cart</button>
+          
+          <div class="trust-badges">
+            <span>Secure Checkout</span>
+            <span>Instant Digital Download</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .product-page {
+    padding-top: calc(var(--spacing-12) + var(--spacing-6));
+    padding-bottom: var(--spacing-12);
+  }
+  
+  .back-link {
+    color: var(--text-secondary);
+    display: inline-block;
+    margin-bottom: var(--spacing-6);
+    font-weight: 600;
+  }
+  
+  .back-link:hover {
+    color: var(--text-primary);
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: var(--spacing-8);
+  }
+  
+  .main-image {
+    width: 100%;
+    height: 500px;
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-4);
+  }
+  
+  .thumbnail-list {
+    display: flex;
+    gap: var(--spacing-3);
+  }
+  
+  .thumb {
+    width: 100px;
+    height: 80px;
+    background: var(--surface-elevated);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+  
+  .thumb.active, .thumb:hover {
+    border-color: var(--accent-color);
+  }
+  
+  .category {
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: var(--spacing-2);
+    display: block;
+  }
+  
+  .product-details h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-2);
+  }
+  
+  .price {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-6);
+  }
+  
+  .description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-6);
+  }
+  
+  .specs {
+    margin-bottom: var(--spacing-8);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-4);
+  }
+  
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-2) 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .label {
+    color: var(--text-secondary);
+  }
+  
+  .add-to-cart {
+    width: 100%;
+    padding: var(--spacing-3);
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-4);
+    border: none;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  
+  .trust-badges {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  
+  @media (max-width: 992px) {
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const addBtn = document.querySelector('.add-to-cart');
+  const apiUrl = import.meta.env.PUBLIC_BACKEND_API_URL || 'http://localhost:4000/api';
+  
+  if (addBtn) {
+    addBtn.addEventListener('click', async () => {
+      addBtn.textContent = 'Processing...';
+      
+      try {
+        const response = await fetch(`${apiUrl}/checkout/stripe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            items: [
+              {
+                price_data: {
+                  currency: 'usd',
+                  product_data: {
+                    name: document.querySelector('h1')?.textContent || 'Asset Pack',
+                  },
+                  unit_amount: 2499, // Static for now, in prod fetch from DB
+                },
+                quantity: 1,
+              }
+            ],
+            successUrl: `${window.location.origin}/shop?success=true`,
+            cancelUrl: window.location.href,
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error('Checkout URL not returned');
+        }
+      } catch (error) {
+        alert("Failed to initialize checkout.");
+        addBtn.textContent = 'Add to Cart';
+      }
+    });
+  }
+</script>

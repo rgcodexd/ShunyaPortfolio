@@ -1,0 +1,293 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// This page will eventually be protected by Supabase Auth middleware.
+---
+
+<Layout title="Dashboard Login | Shunya Studio" description="Admin dashboard login.">
+  <div class="dashboard-shell">
+    <div class="login-container" id="loginView">
+      <h1 class="text-display">Studio Auth</h1>
+      <p class="text-secondary text-body" style="margin-bottom: 24px; text-align: center;">Owner Access Only</p>
+      
+      <form class="auth-form" id="authForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required />
+        </div>
+        <button type="submit" class="btn btn-primary w-full">Sign In</button>
+      </form>
+    </div>
+
+    <!-- The actual dashboard that is shown after login -->
+    <div class="dashboard-layout hidden" id="dashboardView">
+      <aside class="sidebar">
+        <h2 class="text-display brand">SHUNYA</h2>
+        <nav class="sidebar-nav">
+          <a href="#" class="active">Overview</a>
+          <a href="#">Projects</a>
+          <a href="#">Blog Posts</a>
+          <a href="#">Bookings</a>
+          <a href="#">Comments</a>
+          <a href="#">Media Library</a>
+          <a href="#">Settings</a>
+        </nav>
+        <button class="btn btn-outline w-full" id="signOutBtn" style="margin-top: auto;">Sign Out</button>
+      </aside>
+      
+      <main class="dashboard-main">
+        <header class="dashboard-header">
+          <h2 class="text-display">Overview</h2>
+          <div class="user-profile">Rakuma</div>
+        </header>
+        
+        <div class="dashboard-content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3>Active Projects</h3>
+              <p class="text-display stat-number">12</p>
+            </div>
+            <div class="stat-card">
+              <h3>New Bookings</h3>
+              <p class="text-display stat-number">3</p>
+            </div>
+            <div class="stat-card">
+              <h3>Total Views</h3>
+              <p class="text-display stat-number">45.2k</p>
+            </div>
+          </div>
+          
+          <div class="recent-activity">
+            <h3 class="text-display" style="margin-bottom: 16px;">Recent Activity</h3>
+            <div class="activity-list">
+              <div class="activity-item">New booking request from "Epic Games"</div>
+              <div class="activity-item">Comment on "Optimizing Nanite for Foliage"</div>
+              <div class="activity-item">Project "Cyberpunk Alley" reached 1,000 views</div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .dashboard-shell {
+    min-height: 100vh;
+    background: var(--bg-color);
+  }
+  
+  .login-container {
+    max-width: 400px;
+    margin: 15vh auto;
+    padding: var(--spacing-8);
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+  }
+  
+  .login-container h1 {
+    text-align: center;
+    margin-bottom: var(--spacing-2);
+  }
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+  
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  
+  input {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: var(--spacing-2);
+    border-radius: var(--radius-sm);
+  }
+  
+  .w-full {
+    width: 100%;
+  }
+  
+  .btn {
+    padding: var(--spacing-2);
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+  }
+  
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+  }
+  
+  /* Dashboard Layout */
+  .dashboard-layout {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background: var(--surface-color);
+    border-right: 1px solid var(--border-color);
+    padding: var(--spacing-6);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .brand {
+    margin-bottom: var(--spacing-8);
+    color: var(--accent-color);
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+  
+  .sidebar-nav a {
+    color: var(--text-secondary);
+    padding: var(--spacing-2);
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+  }
+  
+  .sidebar-nav a:hover, .sidebar-nav a.active {
+    background: var(--surface-elevated);
+    color: var(--text-primary);
+  }
+  
+  .dashboard-main {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: var(--spacing-8);
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-8);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .user-profile {
+    background: var(--surface-color);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    font-weight: 600;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-8);
+  }
+  
+  .stat-card {
+    background: var(--surface-color);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+  }
+  
+  .stat-card h3 {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-2);
+  }
+  
+  .stat-number {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin: 0;
+  }
+  
+  .activity-list {
+    background: var(--surface-color);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+  }
+  
+  .activity-item {
+    padding: var(--spacing-4);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .activity-item:last-child {
+    border-bottom: none;
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+</style>
+
+<script>
+  // Simple mock login flow
+  const loginView = document.getElementById('loginView');
+  const dashboardView = document.getElementById('dashboardView');
+  const authForm = document.getElementById('authForm');
+  const signOutBtn = document.getElementById('signOutBtn');
+  
+  if (authForm) {
+    authForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Simulate Supabase login
+      if (loginView && dashboardView) {
+        loginView.classList.add('hidden');
+        dashboardView.classList.remove('hidden');
+        
+        // Hide global header/footer for dashboard using quick dom manipulation
+        const header = document.querySelector('.header');
+        const footer = document.querySelector('.footer');
+        if (header) header.setAttribute('style', 'display: none;');
+        if (footer) footer.setAttribute('style', 'display: none;');
+      }
+    });
+  }
+  
+  if (signOutBtn) {
+    signOutBtn.addEventListener('click', () => {
+      // Restore layout and show login
+      if (loginView && dashboardView) {
+        loginView.classList.remove('hidden');
+        dashboardView.classList.add('hidden');
+        const header = document.querySelector('.header');
+        const footer = document.querySelector('.footer');
+        if (header) header.removeAttribute('style');
+        if (footer) footer.removeAttribute('style');
+      }
+    });
+  }
+</script>

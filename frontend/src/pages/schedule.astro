@@ -1,0 +1,195 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Mock availability slots
+const availableSlots = [
+  { date: 'Oct 15, 2024', times: ['10:00 AM', '1:00 PM', '3:30 PM'] },
+  { date: 'Oct 16, 2024', times: ['9:00 AM', '11:00 AM'] },
+  { date: 'Oct 18, 2024', times: ['2:00 PM', '4:00 PM', '5:30 PM'] },
+];
+---
+
+<Layout title="Schedule a Call | Shunya Studio" description="Select a time slot for your consultation.">
+  <div class="schedule-page">
+    <div class="container">
+      <header class="page-header">
+        <h1 class="text-display">Select a Time</h1>
+        <p class="text-secondary text-body">Choose an available slot for our initial discovery call.</p>
+      </header>
+
+      <div class="schedule-wrapper">
+        <div class="calendar-panel">
+          <div class="calendar-header">
+            <h3>Available Dates</h3>
+          </div>
+          
+          <div class="dates-list">
+            {availableSlots.map(slot => (
+              <div class="date-item">
+                <h4 class="text-display">{slot.date}</h4>
+                <div class="times-grid">
+                  {slot.times.map(time => (
+                    <button class="time-btn">{time}</button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div class="confirm-panel hidden" id="confirmPanel">
+          <h3>Confirm Booking</h3>
+          <p class="text-secondary">You have selected:</p>
+          <p class="selected-slot text-display" id="selectedSlotDisplay">Oct 15, 2024 at 10:00 AM</p>
+          
+          <button class="btn btn-primary confirm-btn">Confirm Schedule</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .schedule-page {
+    padding-top: calc(var(--spacing-12) + var(--spacing-6));
+    padding-bottom: var(--spacing-12);
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+  }
+  
+  .page-header h1 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-2);
+  }
+
+  .schedule-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-6);
+  }
+
+  .calendar-panel, .confirm-panel {
+    background: var(--surface-color);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+  }
+
+  .calendar-header h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-2);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .date-item {
+    margin-bottom: var(--spacing-6);
+  }
+
+  .date-item h4 {
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-3);
+    font-size: 1.25rem;
+  }
+
+  .times-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+  }
+
+  .time-btn {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+
+  .time-btn:hover, .time-btn.active {
+    background: var(--accent-muted);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  .confirm-panel h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-2);
+  }
+
+  .selected-slot {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin: var(--spacing-4) 0;
+  }
+
+  .btn {
+    width: 100%;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    padding: var(--spacing-2);
+    font-size: 1.1rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: var(--text-primary);
+  }
+
+  .hidden {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .schedule-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const timeBtns = document.querySelectorAll('.time-btn');
+  const confirmPanel = document.getElementById('confirmPanel');
+  const display = document.getElementById('selectedSlotDisplay');
+  const confirmBtn = document.querySelector('.confirm-btn');
+
+  timeBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Clear other active
+      timeBtns.forEach(b => b.classList.remove('active'));
+      const target = e.target as HTMLElement;
+      target.classList.add('active');
+      
+      const dateText = target.closest('.date-item')?.querySelector('h4')?.textContent;
+      const timeText = target.textContent;
+      
+      if (display && confirmPanel) {
+        display.textContent = `${dateText} at ${timeText}`;
+        confirmPanel.classList.remove('hidden');
+      }
+    });
+  });
+  
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', () => {
+      alert("Consultation scheduled! You will receive an email confirmation shortly.");
+      window.location.href = '/';
+    });
+  }
+</script>

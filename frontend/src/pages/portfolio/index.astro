@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// Mock data
+const projects = [
+  { id: '1', title: 'Cyberpunk Alley', category: 'Environment Design', slug: 'cyberpunk-alley', year: '2023' },
+  { id: '2', title: 'Mecha Concept', category: 'Hard Surface Modeling', slug: 'mecha-concept', year: '2023' },
+  { id: '3', title: 'Fantasy Tavern', category: 'Stylized 3D', slug: 'fantasy-tavern', year: '2022' },
+  { id: '4', title: 'Sci-Fi Corridor', category: 'Environment Design', slug: 'scifi-corridor', year: '2022' },
+  { id: '5', title: 'Alien Flora', category: 'Procedural Generation', slug: 'alien-flora', year: '2023' },
+  { id: '6', title: 'Vintage Car', category: 'Hard Surface Modeling', slug: 'vintage-car', year: '2021' },
+];
+---
+
+<Layout title="Portfolio | Shunya Studio" description="Browse the premium 3D art portfolio of Rakuma.">
+  <div class="portfolio-page">
+    <div class="container">
+      <header class="portfolio-header">
+        <h1 class="text-display">The Archives</h1>
+        <p class="text-secondary text-body">A collection of environments, assets, and concepts.</p>
+        
+        <div class="filters">
+          <button class="filter-btn active">All</button>
+          <button class="filter-btn">Environment Design</button>
+          <button class="filter-btn">Hard Surface</button>
+          <button class="filter-btn">Stylized</button>
+        </div>
+      </header>
+
+      <div class="portfolio-grid">
+        {projects.map((project, index) => (
+          <a href={`/portfolio/${project.slug}`} class="portfolio-card">
+            <div class="image-placeholder"></div>
+            <div class="portfolio-info">
+              <span class="category">{project.category} &mdash; {project.year}</span>
+              <h3 class="title text-display">{project.title}</h3>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .portfolio-page {
+    padding-top: calc(var(--spacing-12) + var(--spacing-6));
+    padding-bottom: var(--spacing-12);
+  }
+
+  .portfolio-header {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+  }
+  
+  .portfolio-header h1 {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-2);
+  }
+  
+  .portfolio-header p {
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 0 auto var(--spacing-6) auto;
+  }
+  
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+  }
+  
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+  
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-4);
+  }
+  
+  .portfolio-card {
+    display: block;
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    height: 400px;
+  }
+  
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--surface-elevated), var(--surface-color));
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .portfolio-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--spacing-4);
+    background: linear-gradient(to top, rgba(18,18,18,0.95), transparent);
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+  
+  .category {
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    display: block;
+    margin-bottom: var(--spacing-1);
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .portfolio-card:hover .image-placeholder {
+    transform: scale(1.05);
+  }
+  
+  .portfolio-card:hover .portfolio-info {
+    transform: translateY(0);
+    opacity: 1;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  
+  // Page entry animation
+  gsap.from('.portfolio-header > *', {
+    y: 30,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: 'power3.out'
+  });
+  
+  gsap.from('.portfolio-card', {
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: 'power3.out',
+    delay: 0.4
+  });
+</script>

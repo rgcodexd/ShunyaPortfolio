@@ -1,0 +1,162 @@
+---
+// Mock data for featured projects (to be replaced with Supabase data later)
+const featuredProjects = [
+  { id: '1', title: 'Cyberpunk Alley', category: 'Environment Design', image: '/images/project1.jpg', slug: 'cyberpunk-alley' },
+  { id: '2', title: 'Mecha Concept', category: 'Hard Surface Modeling', image: '/images/project2.jpg', slug: 'mecha-concept' },
+  { id: '3', title: 'Fantasy Tavern', category: 'Stylized 3D', image: '/images/project3.jpg', slug: 'fantasy-tavern' },
+];
+---
+
+<section class="featured-projects section-padding">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="text-display">Selected Work</h2>
+      <a href="/portfolio" class="view-all">View Full Portfolio &rarr;</a>
+    </div>
+    
+    <div class="projects-grid">
+      {featuredProjects.map((project, index) => (
+        <a href={`/portfolio/${project.slug}`} class={`project-card card-${index}`}>
+          <div class="project-image-wrapper">
+            <!-- Fallback colored div for image placeholder -->
+            <div class="image-placeholder"></div>
+          </div>
+          <div class="project-info">
+            <span class="project-category">{project.category}</span>
+            <h3 class="project-title text-display">{project.title}</h3>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-padding {
+    padding: var(--spacing-12) 0;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--spacing-6);
+  }
+  
+  .section-header h2 {
+    font-size: 3rem;
+    margin: 0;
+  }
+  
+  .view-all {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--accent-color);
+  }
+  
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--spacing-4);
+  }
+  
+  .project-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--surface-color);
+  }
+  
+  /* Asymmetric Grid Layout */
+  .card-0 { grid-column: span 12; height: 600px; }
+  .card-1 { grid-column: span 7; height: 500px; }
+  .card-2 { grid-column: span 5; height: 500px; }
+  
+  .project-image-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--surface-elevated), var(--surface-color));
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .project-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--spacing-4);
+    background: linear-gradient(to top, rgba(18,18,18,0.9), transparent);
+    transform: translateY(20px);
+    opacity: 0.9;
+    transition: all 0.4s ease;
+  }
+  
+  .project-category {
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    display: block;
+    margin-bottom: var(--spacing-1);
+  }
+  
+  .project-title {
+    font-size: 2rem;
+    margin: 0;
+  }
+  
+  .project-card:hover .image-placeholder {
+    transform: scale(1.05);
+  }
+  
+  .project-card:hover .project-info {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  @media (max-width: 768px) {
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-3);
+    }
+    
+    .card-0, .card-1, .card-2 {
+      grid-column: span 12;
+      height: 400px;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  
+  gsap.registerPlugin(ScrollTrigger);
+  
+  const cards = document.querySelectorAll('.project-card');
+  
+  cards.forEach((card, i) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: 'top 85%',
+      },
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      delay: i * 0.1
+    });
+  });
+</script>

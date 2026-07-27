@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { requireAuth, requireAdmin } from '../middleware/auth';
 import { supabaseAdmin } from '../supabase';
 
 const router = Router();
 
 // Secure admin endpoint
-router.post('/projects', requireAuth, requireAdmin, async (req, res) => {
+router.post('/projects', requireAuth, requireAdmin, async (req: Request, res: Response): Promise<any> => {
   const projectData = req.body;
   const { data, error } = await supabaseAdmin.from('projects').insert([projectData]);
   
@@ -14,7 +14,7 @@ router.post('/projects', requireAuth, requireAdmin, async (req, res) => {
 });
 
 // Mock me endpoint
-router.get('/me', requireAuth, (req, res) => {
+router.get('/me', requireAuth, (req: Request, res: Response) => {
   res.json({ user: (req as any).user });
 });
 

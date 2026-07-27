@@ -189,45 +189,10 @@ const productTitle = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slic
 
 <script>
   const addBtn = document.querySelector('.add-to-cart');
-  const apiUrl = import.meta.env.PUBLIC_BACKEND_API_URL || 'http://localhost:4000/api';
   
   if (addBtn) {
-    addBtn.addEventListener('click', async () => {
-      addBtn.textContent = 'Processing...';
-      
-      try {
-        const response = await fetch(`${apiUrl}/checkout/stripe`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            items: [
-              {
-                price_data: {
-                  currency: 'usd',
-                  product_data: {
-                    name: document.querySelector('h1')?.textContent || 'Asset Pack',
-                  },
-                  unit_amount: 2499, // Static for now, in prod fetch from DB
-                },
-                quantity: 1,
-              }
-            ],
-            successUrl: `${window.location.origin}/shop?success=true`,
-            cancelUrl: window.location.href,
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          throw new Error('Checkout URL not returned');
-        }
-      } catch (error) {
-        alert("Failed to initialize checkout.");
-        addBtn.textContent = 'Add to Cart';
-      }
+    addBtn.addEventListener('click', () => {
+      alert("Payment integration is coming soon!");
     });
   }
 </script>

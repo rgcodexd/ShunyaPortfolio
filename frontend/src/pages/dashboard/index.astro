@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
-// This page will eventually be protected by Supabase Auth middleware.
+// Dashboard application shell.
 ---
 
 <Layout title="Dashboard Login | Shunya Studio" description="Admin dashboard login.">
@@ -19,7 +19,7 @@ import Layout from '../../layouts/Layout.astro';
           <label for="password">Password</label>
           <input type="password" id="password" required />
         </div>
-        <button type="submit" class="btn btn-primary w-full">Sign In</button>
+        <button type="submit" class="btn btn-primary w-full" id="signInBtn">Sign In</button>
       </form>
     </div>
 
@@ -27,48 +27,94 @@ import Layout from '../../layouts/Layout.astro';
     <div class="dashboard-layout hidden" id="dashboardView">
       <aside class="sidebar">
         <h2 class="text-display brand">SHUNYA</h2>
-        <nav class="sidebar-nav">
-          <a href="#" class="active">Overview</a>
-          <a href="#">Projects</a>
-          <a href="#">Blog Posts</a>
-          <a href="#">Bookings</a>
-          <a href="#">Comments</a>
-          <a href="#">Media Library</a>
-          <a href="#">Settings</a>
+        <nav class="sidebar-nav" id="sidebarNav">
+          <button class="nav-tab active" data-target="view-overview">Overview</button>
+          <button class="nav-tab" data-target="view-projects">Projects</button>
+          <button class="nav-tab" data-target="view-blog">Blog Posts</button>
+          <button class="nav-tab" data-target="view-bookings">Bookings</button>
+          <button class="nav-tab" data-target="view-comments">Comments</button>
+          <button class="nav-tab" data-target="view-media">Media Library</button>
+          <button class="nav-tab" data-target="view-settings">Settings</button>
         </nav>
         <button class="btn btn-outline w-full" id="signOutBtn" style="margin-top: auto;">Sign Out</button>
       </aside>
       
       <main class="dashboard-main">
         <header class="dashboard-header">
-          <h2 class="text-display">Overview</h2>
-          <div class="user-profile">Rakuma</div>
+          <h2 class="text-display" id="dashboardTitle">Overview</h2>
+          <div class="user-profile" id="userEmailBadge">Loading...</div>
         </header>
         
         <div class="dashboard-content">
-          <div class="stats-grid">
-            <div class="stat-card">
-              <h3>Active Projects</h3>
-              <p class="text-display stat-number">12</p>
-            </div>
-            <div class="stat-card">
-              <h3>New Bookings</h3>
-              <p class="text-display stat-number">3</p>
-            </div>
-            <div class="stat-card">
-              <h3>Total Views</h3>
-              <p class="text-display stat-number">45.2k</p>
-            </div>
-          </div>
           
-          <div class="recent-activity">
-            <h3 class="text-display" style="margin-bottom: 16px;">Recent Activity</h3>
-            <div class="activity-list">
-              <div class="activity-item">New booking request from "Epic Games"</div>
-              <div class="activity-item">Comment on "Optimizing Nanite for Foliage"</div>
-              <div class="activity-item">Project "Cyberpunk Alley" reached 1,000 views</div>
+          <!-- Overview Tab -->
+          <div id="view-overview" class="tab-content active">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <h3>Active Projects</h3>
+                <p class="text-display stat-number">12</p>
+              </div>
+              <div class="stat-card">
+                <h3>New Bookings</h3>
+                <p class="text-display stat-number">3</p>
+              </div>
+              <div class="stat-card">
+                <h3>Total Views</h3>
+                <p class="text-display stat-number">45.2k</p>
+              </div>
+            </div>
+            
+            <div class="recent-activity">
+              <h3 class="text-display" style="margin-bottom: 16px;">Recent Activity</h3>
+              <div class="activity-list">
+                <div class="activity-item">New booking request from "Epic Games"</div>
+                <div class="activity-item">Comment on "Optimizing Nanite for Foliage"</div>
+                <div class="activity-item">Project "Cyberpunk Alley" reached 1,000 views</div>
+              </div>
             </div>
           </div>
+
+          <!-- Projects Tab -->
+          <div id="view-projects" class="tab-content hidden">
+            <h3 class="text-display">Manage Projects</h3>
+            <p class="text-secondary">Here you will be able to add, edit, and delete your portfolio projects.</p>
+            <button class="btn btn-primary" style="margin-top: 1rem;" onclick="alert('Creating project form coming soon!')">Create New Project</button>
+          </div>
+
+          <!-- Blog Tab -->
+          <div id="view-blog" class="tab-content hidden">
+            <h3 class="text-display">Manage Blog Posts</h3>
+            <p class="text-secondary">Draft and publish articles here.</p>
+            <button class="btn btn-primary" style="margin-top: 1rem;" onclick="alert('Blog editor coming soon!')">Write New Post</button>
+          </div>
+
+          <!-- Bookings Tab -->
+          <div id="view-bookings" class="tab-content hidden">
+            <h3 class="text-display">Incoming Bookings</h3>
+            <p class="text-secondary">View all contact and project requests.</p>
+            <div class="activity-list" style="margin-top: 1rem;">
+              <div class="activity-item"><strong>John Doe</strong> - Wants to hire you for a 3D animation project.</div>
+            </div>
+          </div>
+
+          <!-- Comments Tab -->
+          <div id="view-comments" class="tab-content hidden">
+            <h3 class="text-display">Comment Moderation</h3>
+            <p class="text-secondary">Approve or delete user comments.</p>
+          </div>
+
+          <!-- Media Tab -->
+          <div id="view-media" class="tab-content hidden">
+            <h3 class="text-display">Media Library</h3>
+            <p class="text-secondary">Upload images and digital products securely to your Supabase buckets.</p>
+          </div>
+
+          <!-- Settings Tab -->
+          <div id="view-settings" class="tab-content hidden">
+            <h3 class="text-display">Admin Settings</h3>
+            <p class="text-secondary">Manage your studio configuration and passwords.</p>
+          </div>
+
         </div>
       </main>
     </div>
@@ -170,14 +216,20 @@ import Layout from '../../layouts/Layout.astro';
     gap: var(--spacing-2);
   }
   
-  .sidebar-nav a {
+  .nav-tab {
     color: var(--text-secondary);
     padding: var(--spacing-2);
     border-radius: var(--radius-sm);
     font-weight: 500;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
   }
   
-  .sidebar-nav a:hover, .sidebar-nav a.active {
+  .nav-tab:hover, .nav-tab.active {
     background: var(--surface-elevated);
     color: var(--text-primary);
   }
@@ -254,40 +306,119 @@ import Layout from '../../layouts/Layout.astro';
 </style>
 
 <script>
-  // Simple mock login flow
+  import { supabase } from '../../lib/supabase';
+
   const loginView = document.getElementById('loginView');
   const dashboardView = document.getElementById('dashboardView');
   const authForm = document.getElementById('authForm');
+  const signInBtn = document.getElementById('signInBtn');
   const signOutBtn = document.getElementById('signOutBtn');
+  const userEmailBadge = document.getElementById('userEmailBadge');
   
+  // Tab Elements
+  const navTabs = document.querySelectorAll('.nav-tab');
+  const tabContents = document.querySelectorAll('.tab-content');
+  const dashboardTitle = document.getElementById('dashboardTitle');
+
+  // Check if already logged in on load
+  async function checkAuth() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      showDashboard(session.user);
+    }
+  }
+
+  function showDashboard(user) {
+    if (loginView && dashboardView) {
+      loginView.classList.add('hidden');
+      dashboardView.classList.remove('hidden');
+      
+      if (userEmailBadge) {
+        userEmailBadge.textContent = user.email;
+      }
+      
+      // Hide global header/footer for dashboard
+      const header = document.querySelector('.header');
+      const footer = document.querySelector('.footer');
+      if (header) header.setAttribute('style', 'display: none;');
+      if (footer) footer.setAttribute('style', 'display: none;');
+    }
+  }
+
+  function hideDashboard() {
+    if (loginView && dashboardView) {
+      loginView.classList.remove('hidden');
+      dashboardView.classList.add('hidden');
+      const header = document.querySelector('.header');
+      const footer = document.querySelector('.footer');
+      if (header) header.removeAttribute('style');
+      if (footer) footer.removeAttribute('style');
+    }
+  }
+
+  // Handle Login
   if (authForm) {
-    authForm.addEventListener('submit', (e) => {
+    authForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      // Simulate Supabase login
-      if (loginView && dashboardView) {
-        loginView.classList.add('hidden');
-        dashboardView.classList.remove('hidden');
-        
-        // Hide global header/footer for dashboard using quick dom manipulation
-        const header = document.querySelector('.header');
-        const footer = document.querySelector('.footer');
-        if (header) header.setAttribute('style', 'display: none;');
-        if (footer) footer.setAttribute('style', 'display: none;');
+      const email = (document.getElementById('email') as HTMLInputElement).value;
+      const password = (document.getElementById('password') as HTMLInputElement).value;
+      
+      if (signInBtn) signInBtn.textContent = "Authenticating...";
+      
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        alert("Login failed: " + error.message);
+        if (signInBtn) signInBtn.textContent = "Sign In";
+      } else {
+        if (signInBtn) signInBtn.textContent = "Sign In";
+        showDashboard(data.user);
       }
     });
   }
   
+  // Handle Sign Out
   if (signOutBtn) {
-    signOutBtn.addEventListener('click', () => {
-      // Restore layout and show login
-      if (loginView && dashboardView) {
-        loginView.classList.remove('hidden');
-        dashboardView.classList.add('hidden');
-        const header = document.querySelector('.header');
-        const footer = document.querySelector('.footer');
-        if (header) header.removeAttribute('style');
-        if (footer) footer.removeAttribute('style');
+    signOutBtn.addEventListener('click', async () => {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        alert("Error signing out.");
+      } else {
+        hideDashboard();
       }
     });
   }
+
+  // Handle Tab Switching
+  navTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active class from all tabs
+      navTabs.forEach(t => t.classList.remove('active'));
+      // Add active class to clicked tab
+      tab.classList.add('active');
+      
+      // Hide all contents
+      tabContents.forEach(content => content.classList.add('hidden'));
+      
+      // Show targeted content
+      const targetId = tab.getAttribute('data-target');
+      if (targetId) {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.classList.remove('hidden');
+        }
+      }
+      
+      // Update Title
+      if (dashboardTitle) {
+        dashboardTitle.textContent = tab.textContent;
+      }
+    });
+  });
+
+  // Run on load
+  checkAuth();
 </script>

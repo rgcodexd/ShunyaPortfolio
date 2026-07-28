@@ -6,6 +6,7 @@
     <div class="footer-brand">
       <h2 class="text-display">SHUNYA</h2>
       <p class="text-secondary">Studio: Start from the Zero.<br/>The portfolio and studio of Rakuma, elite 3D artist.</p>
+      <a href="/dashboard" class="admin-link" style="display: inline-block; margin-top: 1rem;">Owner Dashboard</a>
     </div>
     
     <div class="footer-links">
@@ -75,8 +76,21 @@
   .footer-bottom {
     border-top: 1px solid var(--border-color);
     padding-top: var(--spacing-4);
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 0.85rem;
+  }
+  
+  .admin-link {
+    color: var(--text-secondary);
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+  
+  .admin-link:hover {
+    opacity: 1;
+    color: var(--text-primary);
   }
   
   @media (max-width: 768px) {

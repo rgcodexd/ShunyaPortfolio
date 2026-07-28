@@ -1,5 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import logo from '../../assets/logo.png';
+import logoText from '../../assets/logo_text.png';
 
 // Dashboard application shell.
 ---
@@ -7,6 +9,9 @@ import Layout from '../../layouts/Layout.astro';
 <Layout title="Dashboard Login | Shunya Studio" description="Admin dashboard login.">
   <div class="dashboard-shell">
     <div class="login-container" id="loginView">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src={logo.src} alt="Shunya Studio" style="width: 80px; height: auto;" />
+      </div>
       <h1 class="text-display">Studio Auth</h1>
       <p class="text-secondary text-body" style="margin-bottom: 24px; text-align: center;">Owner Access Only</p>
       
@@ -26,7 +31,9 @@ import Layout from '../../layouts/Layout.astro';
     <!-- The actual dashboard that is shown after login -->
     <div class="dashboard-layout hidden" id="dashboardView">
       <aside class="sidebar">
-        <h2 class="text-display brand">SHUNYA</h2>
+        <div class="brand" style="margin-bottom: var(--spacing-8); display: flex; align-items: center; justify-content: center;">
+          <img src={logoText.src} alt="Shunya Studio" style="height: 32px; width: auto;" />
+        </div>
         <nav class="sidebar-nav" id="sidebarNav">
           <button class="nav-tab active" data-target="view-overview">Overview</button>
           <button class="nav-tab" data-target="view-projects">Projects</button>

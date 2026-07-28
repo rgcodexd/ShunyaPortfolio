@@ -1,9 +1,12 @@
 ---
+import logoText from '../assets/logo_text.png';
 ---
 
 <header class="header">
   <div class="container header-container">
-    <a href="/" class="brand text-display">SHUNYA</a>
+    <a href="/" class="brand text-display" style="display: flex; align-items: center; height: 32px;">
+      <img src={logoText.src} alt="Shunya Studio" style="height: 100%; width: auto; object-fit: contain;" />
+    </a>
     <nav class="nav">
       <a href="/portfolio">Portfolio</a>
       <a href="/services">Services</a>

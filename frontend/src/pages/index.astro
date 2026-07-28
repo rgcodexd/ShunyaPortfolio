@@ -1,25 +1,4 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import HeroSection from '../sections/HeroSection.astro';
-import AboutStrip from '../sections/AboutStrip.astro';
-import FeaturedProjects from '../sections/FeaturedProjects.astro';
-
-// More sections can be added (ServicesPreview, CTASection, etc.)
+// Redirect the root page to the portfolio page
+return Astro.redirect('/portfolio');
 ---
-
-<Layout>
-	<HeroSection />
-	<AboutStrip />
-	<FeaturedProjects />
-	
-	<!-- Simple CTA Section to end the homepage for now -->
-	<section class="cta-section" style="padding: 120px 0; text-align: center;">
-		<div class="container">
-			<h2 class="text-display" style="font-size: 3.5rem; margin-bottom: 24px;">Ready to Start?</h2>
-			<p class="text-body text-secondary" style="margin-bottom: 40px; max-width: 600px; margin-inline: auto;">
-				Whether you need a custom 3D environment or high-end product visualization, let's create something extraordinary together.
-			</p>
-			<a href="/booking" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.1rem; border-radius: 4px; font-weight: 600; background: var(--accent-color); color: var(--bg-color); text-decoration: none;">Book a Consultation</a>
-		</div>
-	</section>
-</Layout>

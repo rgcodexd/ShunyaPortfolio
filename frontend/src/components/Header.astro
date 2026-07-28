@@ -1,10 +1,16 @@
 ---
+import logoText from '../assets/logo_text.png';
+import logo from '../assets/logo.png';
 ---
 
 <header class="header">
   <div class="container header-container">
-    <a href="/" class="brand text-display">SHUNYA</a>
+    <a href="/portfolio" class="brand text-display" style="display: flex; align-items: center; height: 32px; gap: 12px;">
+      <img src={logo.src} alt="Shunya Studio Icon" style="height: 100%; width: auto; object-fit: contain;" />
+      <img src={logoText.src} alt="Shunya Studio" style="height: 100%; width: auto; object-fit: contain;" />
+    </a>
     <nav class="nav">
+      <a href="/home">Home</a>
       <a href="/portfolio">Portfolio</a>
       <a href="/services">Services</a>
       <a href="/courses">Courses</a>
